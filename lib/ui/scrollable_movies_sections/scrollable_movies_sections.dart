@@ -57,7 +57,10 @@ class _ScrollableMoviesSectionsState extends State<ScrollableMoviesSections> {
           ],
         ),
         const SizedBox(height: 20),
-        ContentHorizontalListView(movies: moviesList),
+        ContentHorizontalListView(
+          movies: moviesList,
+          type: widget.type,
+        ),
       ],
     );
   }

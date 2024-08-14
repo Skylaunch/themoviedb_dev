@@ -9,7 +9,7 @@ class ApiClient {
     // TODO: Реализовать опциональную авторизацию
   }
 
-  Future<List<MovieModel>?> getTrends() async {
+  Future<List<MovieModel>?> getTrends(int page) async {
     final response = await _dio.get(
       'https://api.themoviedb.org/3/movie/now_playing',
       options: Options(
@@ -19,7 +19,7 @@ class ApiClient {
         },
       ),
       queryParameters: {
-        'page': 1,
+        'page': page,
         'language': 'ru-RU',
       },
     );
@@ -35,7 +35,7 @@ class ApiClient {
     return selectedPageMoviesResult;
   }
 
-  Future<List<MovieModel>?> getPopular() async {
+  Future<List<MovieModel>?> getPopular(int page) async {
     final response = await _dio.get(
       'https://api.themoviedb.org/3/movie/popular',
       options: Options(
@@ -45,7 +45,7 @@ class ApiClient {
         },
       ),
       queryParameters: {
-        'page': 1,
+        'page': page,
         'language': 'ru-RU',
       },
     );

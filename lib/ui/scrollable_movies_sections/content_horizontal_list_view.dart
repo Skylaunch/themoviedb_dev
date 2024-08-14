@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:themoviedb_dev/bloc/guest_session_bloc.dart';
 import 'package:themoviedb_dev/ui/scrollable_movies_sections/image_shower.dart';
+import 'package:themoviedb_dev/ui/scrollable_movies_sections/scrollable_movies_sections_helpers/scrollable_movies_sections_helper.dart';
 import 'package:themoviedb_dev/ui/ui_models/ui_movie_model.dart';
 
 class ContentHorizontalListView extends StatelessWidget {
-  const ContentHorizontalListView({super.key, required this.movies});
+  const ContentHorizontalListView({
+    super.key,
+    required this.movies,
+    required this.type,
+  });
 
   final List<UIMovieModel>? movies;
+  final SelectorType type;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +29,15 @@ class ContentHorizontalListView extends StatelessWidget {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
+                  if (movies != null &&
+                      movies!.isNotEmpty &&
+                      index == movies!.length - 1) {
+                    BlocProvider.of<GuestSessionBloc>(context)
+                        .add(LoadNextMoviesPage(
+                      loadingListType: type,
+                      newPageIndex: (movies!.length ~/ 20) + 1,
+                    ));
+                  }
                   final movie = movies![index];
                   return _ListViewElement(movie: movie);
                 },

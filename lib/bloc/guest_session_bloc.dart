@@ -1,10 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:themoviedb_dev/domain/data_providers/guest_session_data_provider.dart';
+import 'package:themoviedb_dev/ui/scrollable_movies_sections/scrollable_movies_sections_helpers/scrollable_movies_sections_helper.dart';
 import 'package:themoviedb_dev/ui/ui_models/ui_movie_model.dart';
 
 abstract class GuestSessionEvent {}
 
 class GuestSessionOpenAppEvent implements GuestSessionEvent {}
+
+class LoadNextMoviesPage implements GuestSessionEvent {
+  final SelectorType loadingListType;
+
+  final int newPageIndex;
+
+  LoadNextMoviesPage({
+    required this.loadingListType,
+    required this.newPageIndex,
+  });
+}
 
 abstract class GuestSessionState {
   final List<UIMovieModel>? thrandMovies;
@@ -51,9 +63,9 @@ class GuestSessionBloc extends Bloc<GuestSessionEvent, GuestSessionState> {
     on((event, emit) async {
       switch (event.runtimeType) {
         case (GuestSessionOpenAppEvent):
-          var thrands = await guestSessionDataProvider.getThrandingMovies();
+          var thrands = await guestSessionDataProvider.getThrandingMovies(1);
 
-          var populars = await guestSessionDataProvider.getPopularMovies();
+          var populars = await guestSessionDataProvider.getPopularMovies(1);
           emit(
             GuestSessionOpenAppSuccess(
               thrandMovies: thrands,
@@ -61,6 +73,43 @@ class GuestSessionBloc extends Bloc<GuestSessionEvent, GuestSessionState> {
             ),
           );
           break;
+        case (LoadNextMoviesPage):
+          var loadEvent = event as LoadNextMoviesPage;
+          var newPageIndex = loadEvent.newPageIndex;
+
+          switch (loadEvent.loadingListType) {
+            case (SelectorType.thrand):
+              var thrands = await guestSessionDataProvider
+                  .getThrandingMovies(newPageIndex);
+
+              emit(
+                GuestSessionOpenAppSuccess(
+                  thrandMovies: <UIMovieModel>[
+                    ...state.thrandMovies ?? [],
+                    ...thrands,
+                  ],
+                  popularMovies: state.popularMovies,
+                ),
+              );
+              break;
+            case SelectorType.popular:
+              var populars =
+                  await guestSessionDataProvider.getPopularMovies(newPageIndex);
+
+              emit(
+                GuestSessionOpenAppSuccess(
+                  thrandMovies: state.thrandMovies,
+                  popularMovies: [
+                    ...state.popularMovies ?? [],
+                    ...populars,
+                  ],
+                ),
+              );
+              break;
+            case SelectorType.free:
+              // TODO: Реализовать кейс
+              break;
+          }
       }
     });
   }
