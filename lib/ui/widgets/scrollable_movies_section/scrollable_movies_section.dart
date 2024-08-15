@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:themoviedb_dev/bloc/guest_session_bloc.dart';
-import 'package:themoviedb_dev/ui/scrollable_movies_sections/content_horizontal_list_view.dart';
-import 'package:themoviedb_dev/ui/scrollable_movies_sections/dropdown_selection_options.dart';
-import 'package:themoviedb_dev/ui/scrollable_movies_sections/scrollable_movies_sections_helpers/scrollable_movies_sections_helper.dart';
+import 'package:themoviedb_dev/ui/widgets/scrollable_movies_section/content_horizontal_list_view.dart';
+import 'package:themoviedb_dev/ui/widgets/scrollable_movies_section/dropdown_selection_options.dart';
+import 'package:themoviedb_dev/helpers/scrollable_movies_sections_helper.dart';
 import 'package:themoviedb_dev/ui/ui_models/ui_movie_model.dart';
 
 class ScrollableMoviesSections extends StatefulWidget {

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:themoviedb_dev/bloc/guest_session_bloc.dart';
-import 'package:themoviedb_dev/ui/scrollable_movies_sections/image_shower.dart';
-import 'package:themoviedb_dev/ui/scrollable_movies_sections/scrollable_movies_sections_helpers/scrollable_movies_sections_helper.dart';
+import 'package:themoviedb_dev/ui/widgets/scrollable_movies_section/image_shower.dart';
+import 'package:themoviedb_dev/helpers/scrollable_movies_sections_helper.dart';
 import 'package:themoviedb_dev/ui/ui_models/ui_movie_model.dart';
+import 'package:themoviedb_dev/ui/widgets/scrollable_movies_section/vote_average_percent_widget.dart';
 
 class ContentHorizontalListView extends StatelessWidget {
   const ContentHorizontalListView({
@@ -115,16 +116,12 @@ class _ListViewElement extends StatelessWidget {
               ),
             ],
           ),
-          const Positioned(
+          Positioned(
             bottom: 105,
             left: 16,
-            child: SizedBox(
-              height: 34,
-              width: 34,
-              child: CircleAvatar(
-                backgroundColor: Colors.black,
-                child: SizedBox(),
-              ),
+            child: VoteAveragePercentWidget(
+              percent: movie.voteAverage,
+              voteAverageText: movie.voteAverageText,
             ),
           ),
         ],

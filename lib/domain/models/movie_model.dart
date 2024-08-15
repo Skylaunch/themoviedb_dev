@@ -23,7 +23,7 @@ class MovieModel {
   final bool adult;
 
   @JsonKey(name: 'backdrop_path')
-  final String backdropPath;
+  final String? backdropPath;
 
   @JsonKey(name: 'genre_ids')
   final List<int> genreIds;

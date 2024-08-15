@@ -19,7 +19,7 @@ class UIMovieModel {
 
   final bool isAdult;
 
-  final String backdropPath;
+  final String? backdropPath;
 
   final String _posterPath;
 
@@ -44,6 +44,8 @@ class UIMovieModel {
 
   final double voteAverage;
 
+  String get voteAverageText => '${(voteAverage * 10).toStringAsFixed(0)}%';
+
   final int voteCount;
 
   static UIMovieModel from(MovieModel model) {
@@ -58,7 +60,7 @@ class UIMovieModel {
       releaseDate: model.releaseDate,
       title: model.title,
       isVideo: model.video,
-      voteAverage: model.voteAverage,
+      voteAverage: model.voteAverage / 10,
       voteCount: model.voteCount,
       posterPath: model.posterPath,
     );

@@ -29,6 +29,11 @@ class ApiClient {
     List<MovieModel> selectedPageMoviesResult = [];
 
     for (var element in (response.data['results'] as List)) {
+      var language = element['original_language'];
+
+      // Пока поддержка только ru и en фильмов
+      if (language != 'en' && language != 'ru') continue;
+
       selectedPageMoviesResult.add(MovieModel.fromJson(element));
     }
 

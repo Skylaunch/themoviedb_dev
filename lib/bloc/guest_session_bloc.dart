@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:themoviedb_dev/domain/data_providers/guest_session_data_provider.dart';
-import 'package:themoviedb_dev/ui/scrollable_movies_sections/scrollable_movies_sections_helpers/scrollable_movies_sections_helper.dart';
+import 'package:themoviedb_dev/helpers/scrollable_movies_sections_helper.dart';
 import 'package:themoviedb_dev/ui/ui_models/ui_movie_model.dart';
 
 abstract class GuestSessionEvent {}
